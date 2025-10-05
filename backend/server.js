@@ -103,29 +103,28 @@ app.post('/api/seed-production', async (req, res) => {
     }
 
     const User = require('./models/User');
-    const bcrypt = require('bcryptjs');
 
     // Clear existing users
     await User.deleteMany({});
 
-    // Create demo users with hackathon credentials
+    // Create demo users with hackathon credentials (password will be auto-hashed by model)
     const users = await User.create([
       {
         username: 'john_user',
         email: 'john@example.com',
-        password: await bcrypt.hash('password123', 10),
+        password: 'password123',
         role: 'user'
       },
       {
         username: 'jane_agent',
         email: 'jane@example.com',
-        password: await bcrypt.hash('password123', 10),
+        password: 'password123',
         role: 'agent'
       },
       {
         username: 'admin_user',
         email: 'admin@mail.com',
-        password: await bcrypt.hash('admin123', 10),
+        password: 'admin123',
         role: 'admin'
       }
     ]);
