@@ -39,6 +39,25 @@ app.get('/api/health', (req, res) => {
   });
 });
 
+// Hackathon project info endpoint
+app.get('/.well-known/hackathon.json', (req, res) => {
+  res.json({
+    problem_statement: 3,
+    approach: "Full-stack ticketing system with Node.js/Express backend, React frontend, MongoDB database",
+    repo_url: "https://github.com/KetanMishra/skillion.git",
+    demo_url: "https://skillion-omega.vercel.app",
+    video_url: "",
+    tech_stack: ["Node.js", "Express", "MongoDB", "React", "JWT", "Vite"],
+    team_members: [
+      {
+        name: "Developer",
+        email: "developer@hackathon.com",
+        role: "Full-stack Developer"
+      }
+    ]
+  });
+});
+
 // Hackathon meta endpoint
 app.get('/api/_meta', (req, res) => {
   res.json({
