@@ -114,4 +114,57 @@ router.post('/:ticketId/comments', authenticateToken, async (req, res) => {
   }
 });
 
+// GET /api/tickets/:id/comments - Get comments for a ticket
+router.get('/:ticketId/comments', authenticateToken, async (req, res) => {
+  try {
+    const { ticketId } = req.params;
+
+    // Check if ticket exists
+    const ticket = await Ticket.findById(ticketId);
+    if (!ticket) {
+      return res.status(404).json({
+        error: {
+          code: 'TICKET_NOT_FOUND',
+          message: 'Ticket not found'
+        }
+      });
+    }
+
+    // Get comments for the ticket
+    const comments = await Comment.find({ ticket_id: ticketId })
+      .populate('author', 'username email role')
+      .sort({ created_at: 1 });
+
+    res.json({
+      comments: comments.map(comment => ({
+        id: comment._id,
+        text: comment.text,
+        author: comment.author,
+        parent_id: comment.parent_id,
+        created_at: comment.created_at,
+        updated_at: comment.updated_at
+      }))
+    });
+
+  } catch (error) {
+    console.error('Get comments error:', error);
+    
+    if (error.name === 'CastError') {
+      return res.status(404).json({
+        error: {
+          code: 'TICKET_NOT_FOUND',
+          message: 'Ticket not found'
+        }
+      });
+    }
+
+    res.status(500).json({
+      error: {
+        code: 'INTERNAL_ERROR', 
+        message: 'Internal server error'
+      }
+    });
+  }
+});
+
 module.exports = router;
