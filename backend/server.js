@@ -29,7 +29,7 @@ app.use(express.urlencoded({ extended: true }));
 // Rate limiting middleware - apply after auth to get user ID
 const rateLimiter = createRateLimiter();
 
-// Health check endpoint (no rate limiting)
+// Health check endpoint (no rate limiting) - Updated for hackathon
 app.get('/api/health', (req, res) => {
   res.json({
     status: 'ok',
