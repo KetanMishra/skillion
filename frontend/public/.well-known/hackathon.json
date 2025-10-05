@@ -1,0 +1,59 @@
+{
+  "name": "HelpDesk Mini",
+  "description": "Ticketing system with SLA timers, assignments, threaded comments, and role-based access",
+  "problem_statement": 3,
+  "team_name": "Your Team Name",
+  "submission_date": "2025-10-05",
+  "tech_stack": {
+    "backend": ["Node.js", "Express.js", "MongoDB", "Mongoose"],
+    "frontend": ["React", "Vite", "TailwindCSS", "Axios"],
+    "database": "MongoDB Atlas",
+    "deployment": {
+      "backend": "Render",
+      "frontend": "Vercel"
+    }
+  },
+  "demo_credentials": {
+    "admin": {
+      "email": "admin@mail.com",
+      "password": "admin123"
+    },
+    "agent": {
+      "email": "jane@example.com", 
+      "password": "password123"
+    },
+    "user": {
+      "email": "john@example.com",
+      "password": "password123"
+    }
+  },
+  "api_endpoints": [
+    "POST /api/tickets",
+    "GET /api/tickets",
+    "GET /api/tickets/:id",
+    "PATCH /api/tickets/:id",
+    "POST /api/tickets/:id/comments",
+    "POST /api/auth/register",
+    "POST /api/auth/login",
+    "GET /api/health"
+  ],
+  "features": [
+    "SLA deadline tracking",
+    "Role-based access control",
+    "Optimistic locking for concurrent updates",
+    "Threaded comments",
+    "Search functionality",
+    "Pagination with offset/limit",
+    "Rate limiting (60 req/min/user)",
+    "Idempotency key support",
+    "JWT authentication"
+  ],
+  "compliance": {
+    "pagination": "?limit=&offset= → {items, next_offset}",
+    "idempotency": "Idempotency-Key header support",
+    "rate_limits": "60 req/min/user with 429 response",
+    "error_format": "{ error: { code, field?, message } }",
+    "cors": "Open for judging",
+    "authentication": "JWT-based with register/login"
+  }
+}

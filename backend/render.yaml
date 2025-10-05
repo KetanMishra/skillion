@@ -1,0 +1,12 @@
+# Render deployment configuration for HelpDesk Mini Backend
+# Using existing MongoDB Atlas database
+
+buildCommand: npm install
+startCommand: npm start
+
+# Environment variables (set these in Render dashboard)
+# NODE_ENV=production
+# PORT=10000 (automatically set by Render)
+# MONGODB_URI=mongodb+srv://noobdanoobda86_db_user:eZ1IoWAtxUx8RwOJ@cluster0.wk0gala.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+# JWT_SECRET=your-production-jwt-secret-here
+# FRONTEND_URL=https://your-frontend-domain.vercel.app
