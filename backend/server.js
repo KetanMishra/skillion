@@ -29,17 +29,7 @@ app.use(express.urlencoded({ extended: true }));
 // Rate limiting middleware - apply after auth to get user ID
 const rateLimiter = createRateLimiter();
 
-// Health check endpoint (no rate limiting) - Updated for hackathon
-app.get('/api/health', (req, res) => {
-  res.json({
-    status: 'ok',
-    timestamp: new Date().toISOString(),
-    uptime: process.uptime(),
-    environment: process.env.NODE_ENV || 'development'
-  });
-});
-
-// Hackathon project info endpoint
+// Hackathon project info endpoint (must be before /api middleware)
 app.get('/.well-known/hackathon.json', (req, res) => {
   res.json({
     problem_statement: 3,
@@ -55,6 +45,16 @@ app.get('/.well-known/hackathon.json', (req, res) => {
         role: "Full-stack Developer"
       }
     ]
+  });
+});
+
+// Health check endpoint (no rate limiting) - Updated for hackathon
+app.get('/api/health', (req, res) => {
+  res.json({
+    status: 'ok',
+    timestamp: new Date().toISOString(),
+    uptime: process.uptime(),
+    environment: process.env.NODE_ENV || 'development'
   });
 });
 
