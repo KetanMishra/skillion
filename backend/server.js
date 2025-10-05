@@ -95,6 +95,52 @@ app.get('/api/_meta', (req, res) => {
   });
 });
 
+// Temporary seed endpoint for production setup
+app.post('/api/seed-production', async (req, res) => {
+  try {
+    if (process.env.NODE_ENV !== 'production') {
+      return res.status(403).json({ error: 'Only available in production' });
+    }
+
+    const User = require('./models/User');
+    const bcrypt = require('bcryptjs');
+
+    // Clear existing users
+    await User.deleteMany({});
+
+    // Create demo users with hackathon credentials
+    const users = await User.create([
+      {
+        username: 'john_user',
+        email: 'john@example.com',
+        password: await bcrypt.hash('password123', 10),
+        role: 'user'
+      },
+      {
+        username: 'jane_agent',
+        email: 'jane@example.com',
+        password: await bcrypt.hash('password123', 10),
+        role: 'agent'
+      },
+      {
+        username: 'admin_user',
+        email: 'admin@mail.com',
+        password: await bcrypt.hash('admin123', 10),
+        role: 'admin'
+      }
+    ]);
+
+    res.json({
+      message: 'Production database seeded successfully',
+      users: users.map(u => ({ email: u.email, role: u.role }))
+    });
+
+  } catch (error) {
+    console.error('Seeding error:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
 // Apply authentication middleware for protected routes
 app.use('/api', (req, res, next) => {
   // Skip auth for public routes
